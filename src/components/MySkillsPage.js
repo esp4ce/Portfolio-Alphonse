@@ -114,7 +114,7 @@ const MySkillsPage = () => {
 
                 </Main>
 
-                <BigTitle text="Mes compétences" top="80%" right="30%" />
+                <BigTitle text="Compétences" top="80%" right="30%" />
 
             </Box>
 
