@@ -3,6 +3,8 @@ import { ThemeProvider } from "styled-components";
 import { lightTheme } from "./components/Themes";
 import { AnimatePresence } from "framer-motion";
 import GlobalStyle from "./globalStyles";
+import { Analytics } from '@vercel/analytics/react';
+
 
 //Components
 import Main from "./components/Main";
@@ -43,6 +45,8 @@ function App() {
 you can add custom 404 component or message instead of Main component*/}
             <Route path="*" element={<Main />} />
           </Routes>
+          <Analytics />
+
         </AnimatePresence>
       </ThemeProvider>
     </>
