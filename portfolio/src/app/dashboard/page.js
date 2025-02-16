@@ -25,7 +25,7 @@ export default function Dashboard() {
 
   return (
     <div className="flex flex-col justify-center items-center min-h-screen bg-black text-white text-center px-4">
-      <h1 className="text-4xl font-bold">Bienvenue sur votre Dashboard</h1>
+      <h1 className="text-4xl font-bold">Bienvenmmue sur votre Dashboard</h1>
       <button
         onClick={handleLogout}
         className="bg-red-500 text-white px-4 py-2 rounded mt-4 transition-transform hover:scale-110"
