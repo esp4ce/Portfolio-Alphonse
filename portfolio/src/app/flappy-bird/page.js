@@ -128,6 +128,16 @@ export default function FlappyBird() {
     };
   }, []);
 
+  // Détection du type d'appareil pour éviter les conflits tactiles
+  const [isMobile, setIsMobile] = useState(false);
+  
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
+    };
+    checkMobile();
+  }, []);
+
   // Init pipes
   useEffect(() => {
     pipes.current = [
@@ -143,8 +153,9 @@ export default function FlappyBird() {
   const handleGameAction = () => {
     const now = Date.now();
     
-    // Éviter les double sauts (délai minimum de 100ms)
-    if (now - lastActionTime.current < 100) {
+    // Éviter les double sauts (délai minimum de 200ms sur mobile)
+    const minDelay = isMobile ? 200 : 100;
+    if (now - lastActionTime.current < minDelay) {
       return;
     }
     
@@ -548,11 +559,15 @@ export default function FlappyBird() {
       className="flex flex-col items-center justify-center min-h-screen bg-black text-white p-2 sm:p-4"
       onTouchStart={(e) => {
         e.preventDefault();
-        handleGameAction();
+        if (isMobile) {
+          handleGameAction();
+        }
       }}
       onClick={(e) => {
         e.preventDefault();
-        handleGameAction();
+        if (!isMobile) {
+          handleGameAction();
+        }
       }}
     >
       {/* Élément audio pour la musique de fond */}
