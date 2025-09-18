@@ -41,7 +41,7 @@ export default function AudioPlayer() {
   return (
     <>
       <audio ref={audioRef} preload="auto" loop>
-        <source src="/music/Intro - Reymour.mp3" type="audio/mpeg" />
+        <source src="/music/Intro - Reymour - Cut.mp3" type="audio/mpeg" />
         Your browser does not support the audio element.
       </audio>
       {/* Fournit une API de contrôle via CustomEvent si nécessaire plus tard */}

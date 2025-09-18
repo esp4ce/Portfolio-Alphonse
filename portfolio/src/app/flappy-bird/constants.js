@@ -28,7 +28,7 @@ export const DESKTOP_MIN_DELAY_MS = 100;
 
 
 // Réglages du gap (ouverture) et du centrage vertical
-export const GAP_MIN = 80;
+export const GAP_MIN = 85;
 export const GAP_MAX = 200;
 export const CENTER_MIN = 210;
 export const CENTER_MAX = 350;
