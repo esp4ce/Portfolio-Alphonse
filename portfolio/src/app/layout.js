@@ -14,18 +14,17 @@ const geistMono = Geist_Mono({
 
 export const metadata = {
   title: "contact@alphonse.pro",
-  description: "Alphonse Portfolio",
+  description: "a.portfolio",
   viewport: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <Analytics/>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-
+      <Analytics/>
         {children}
       </body>
     </html>
