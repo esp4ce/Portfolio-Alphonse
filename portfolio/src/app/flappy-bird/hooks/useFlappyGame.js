@@ -201,6 +201,10 @@ export function useFlappyGame() {
 
     if (!isGameStarted && !isGameOver) {
       setIsGameStarted(true);
+      // Log de démarrage de partie (prod only via route API)
+      try {
+        fetch('/api/metrics/game-start', { method: 'POST' });
+      } catch {}
     } else if (isGameStarted && !isGameOver) {
       velocity.current = JUMP_VELOCITY;
       birdRotation.current = -0.2;
