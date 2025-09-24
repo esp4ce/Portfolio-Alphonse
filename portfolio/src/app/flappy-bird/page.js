@@ -2,9 +2,23 @@
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useFlappyGame } from "./hooks/useFlappyGame";
-import GameCanvas from "./components/GameCanvas";
-import AudioPlayer from "./components/AudioPlayer";
+import dynamic from "next/dynamic";
+import { LoaderCircle } from "lucide-react";
 import { supabase } from "../lib/supabase";
+
+// Lazy-load heavy client components to reduce initial bundle
+const GameCanvas = dynamic(() => import("./components/GameCanvas"), {
+  ssr: false,
+  loading: () => (
+    <div className="flex items-center justify-center min-h-[60vh]">
+      <LoaderCircle className="animate-spin text-white/80 h-8 w-8 sm:h-10 sm:w-10" />
+    </div>
+  ),
+});
+
+const AudioPlayer = dynamic(() => import("./components/AudioPlayer"), {
+  ssr: false,
+});
 
 export default function FlappyBird() {
   const {

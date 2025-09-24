@@ -15,38 +15,38 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(false); // État pour gérer le chargement
   const router = useRouter();
 
-  // Vérification de la session utilisateur pour redirection
+  // Session check and redirect
   useEffect(() => {
     const checkSession = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) {
-        router.push("/");  // Redirection vers la page d'accueil si non connecté
+        router.push("/");  // Redirect to home if not authenticated
       }
     };
 
-    checkSession(); // Appel de la fonction pour vérifier la session
+    checkSession();
   }, [router]);
 
-  // Fonction pour soumettre un site
+  // Submit a website
   const handleSiteSubmit = async () => {
     if (!siteUrl || !siteStack) {
-      alert("Tous les champs pour le site sont requis.");
+      alert("All website fields are required.");
       return;
     }
 
-    const parsedSiteStack = JSON.parse(siteStack || '[]');  // Si siteStack est une chaîne, la parser en tableau
-    setLoading(true); // Activer le chargement
+    const parsedSiteStack = JSON.parse(siteStack || '[]');
+    setLoading(true);
 
     const { error } = await supabase.from("websites").insert([
       { name: siteName, url: siteUrl, stack: parsedSiteStack, country },
     ]);
 
-    setLoading(false); // Désactiver le chargement après la soumission
+    setLoading(false);
 
     if (error) {
-      console.error("Erreur lors de l'ajout du site :", error.message);
+      console.error("Error while adding website:", error.message);
     } else {
-      alert("Site ajouté !");
+      alert("Website added!");
       setSiteName("");
       setSiteUrl("");
       setSiteStack("");
@@ -54,36 +54,36 @@ export default function Dashboard() {
     }
   };
 
-  // Fonction pour soumettre un projet
+  // Submit a project
   const handleProjectSubmit = async () => {
     if (!projectName || !githubUrl) {
-      alert("Tous les champs pour le projet sont requis.");
+      alert("All project fields are required.");
       return;
     }
 
-    const parsedProjectStack = JSON.parse(projectStack || '[]');  // Idem ici pour stack projet
-    setLoading(true); // Activer le chargement
+    const parsedProjectStack = JSON.parse(projectStack || '[]');
+    setLoading(true);
 
     const { error } = await supabase.from("projects").insert([
       { name: projectName, url: githubUrl, stack: parsedProjectStack },
     ]);
 
-    setLoading(false); // Désactiver le chargement après la soumission
+    setLoading(false);
 
     if (error) {
-      console.error("Erreur lors de l'ajout du projet :", error.message);
+      console.error("Error while adding project:", error.message);
     } else {
-      alert("Projet ajouté !");
+      alert("Project added!");
       setProjectName("");
       setGithubUrl("");
       setProjectStack("");
     }
   };
 
-  // Déconnexion
+  // Logout
   const handleLogout = async () => {
     await supabase.auth.signOut();
-    router.push("/");  // Redirection vers la page d'accueil après déconnexion
+    router.push("/");
   };
 
   return (
@@ -94,18 +94,18 @@ export default function Dashboard() {
           onClick={handleLogout}
           className="text-white font-bold px-4 py-2 rounded-md text-xl"
         >
-          Déconnexion
+          Logout
         </button>
       </nav>
 
       {/* Main Content */}
       <div className="flex flex-wrap justify-center gap-8 py-8">
-        {/* Ajouter un Site */}
+        {/* Add a Website */}
         <div className="w-full sm:w-1/2 lg:w-1/3 space-y-4">
-          <h2 className="text-3xl font-bold text-center">Ajouter un Site</h2>
+          <h2 className="text-3xl font-bold text-center">Add a Website</h2>
           <input
             type="text"
-            placeholder="nom"
+            placeholder="name"
             value={siteName}
             onChange={(e) => setSiteName(e.target.value)}
             className="mb-4 p-2 w-full text-black text-xl bg-white rounded-sm"
@@ -119,14 +119,14 @@ export default function Dashboard() {
           />
           <input
             type="text"
-            placeholder="stack (ex: ['react', 'node.js'])"
+            placeholder="stack (e.g., ['react', 'node.js'])"
             value={siteStack}
             onChange={(e) => setSiteStack(e.target.value)}
             className="mb-4 p-2 w-full text-black text-xl bg-white rounded-sm"
           />
           <input
             type="text"
-            placeholder="pays"
+            placeholder="country"
             value={country}
             onChange={(e) => setCountry(e.target.value)}
             className="mb-4 p-2 w-full text-black text-xl bg-white rounded-sm"
@@ -138,17 +138,17 @@ export default function Dashboard() {
             {loading ? (
               <LoaderCircle className="animate-spin text-white text-3xl" />
             ) : (
-              "Ajouter Site"
+              "Add Website"
             )}
           </button>
         </div>
 
-        {/* Ajouter un Projet */}
+        {/* Add a Project */}
         <div className="w-full sm:w-1/2 lg:w-1/3 space-y-4">
-          <h2 className="text-3xl font-bold text-center">Ajouter un Projet</h2>
+          <h2 className="text-3xl font-bold text-center">Add a Project</h2>
           <input
             type="text"
-            placeholder="nom"
+            placeholder="name"
             value={projectName}
             onChange={(e) => setProjectName(e.target.value)}
             className="mb-4 p-2 w-full text-black text-xl bg-white rounded-sm"
@@ -162,7 +162,7 @@ export default function Dashboard() {
           />
           <input
             type="text"
-            placeholder="stack (ex: ['react', 'express'])"
+            placeholder="stack (e.g., ['react', 'express'])"
             value={projectStack}
             onChange={(e) => setProjectStack(e.target.value)}
             className="mb-4 p-2 w-full text-black text-xl bg-white rounded-sm"
@@ -174,7 +174,7 @@ export default function Dashboard() {
             {loading ? (
               <LoaderCircle className="animate-spin text-white text-3xl" />
             ) : (
-              "Ajouter Projet"
+              "Add Project"
             )}
           </button>
         </div>
